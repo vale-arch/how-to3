@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<Layout>
+  <Navbar />
+
+  <main class="container mx-auto px-4 py-12 font-lato">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <!-- Left Column: Image -->
+      <div>
+        <img src="https://placehold.co/600x800/36454F/F5F5F5?text=Guide+Cover" alt="Guide Cover" class="w-full h-auto rounded-lg shadow-lg">
+      </div>
+
+      <!-- Right Column: Details -->
+      <div>
+        <h1 class="text-4xl font-bold font-poppins mb-4">The Ultimate Guide to X</h1>
+        <p class="text-3xl font-bold text-accent mb-6">KES 3000</p>
+        <button class="bg-accent text-white font-bold py-4 px-8 rounded-full hover:bg-accent/90 text-xl w-full mb-8">
+          Buy Now with M-Pesa
+        </button>
+
+        <div class="mb-8">
+          <h2 class="text-2xl font-bold font-poppins mb-4">What You'll Learn</h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li>How to do thing 1</li>
+            <li>Advanced techniques for thing 2</li>
+            <li>Common mistakes to avoid</li>
+            <li>How to monetize your new skill</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-bold font-poppins mb-4">Who This Guide Is For</h2>
+          <p>This guide is for absolute beginners who want to learn the fundamentals of X, as well as intermediate practitioners looking to level up their skills. No prior experience is necessary.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="text-center py-4 mt-12">
+    <p>&copy; {new Date().getFullYear()} HowToKE. All rights reserved.</p>
+  </footer>
+</Layout>
