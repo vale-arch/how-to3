@@ -9,6 +9,11 @@ export default {
         accent: '#FF5733',
         background: '#F5F5F5',
         success: '#28a745',
+        dark: {
+          primary: '#edf2f7',
+          background: '#1a202c',
+          accent: '#FF5733',
+        }
       },
       fontFamily: {
         sans: ['Poppins', 'Lato', 'sans-serif'],
