@@ -1,4 +1,6 @@
 ---
+import { supabase } from '../lib/supabase';
+const { data: { user } } = await supabase.auth.getUser();
 --- 
 <nav class="bg-white dark:bg-dark-background shadow-md font-poppins">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,7 +13,11 @@
           <a href="/guides" class="text-primary dark:text-dark-primary hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Guides</a>
           <a href="/blog" class="text-primary dark:text-dark-primary hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Blog</a>
           <a href="/about" class="text-primary dark:text-dark-primary hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">About Us</a>
-          <a href="/login" class="bg-accent hover:bg-accent/90 text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
+          {user ? (
+            <a href="/account" class="bg-accent hover:bg-accent/90 text-white px-3 py-2 rounded-md text-sm font-medium">My Account</a>
+          ) : (
+            <a href="/login" class="bg-accent hover:bg-accent/90 text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
+          )}
         </div>
       </div>
       <div class="-mr-2 flex md:hidden">
@@ -37,7 +43,11 @@
       <a href="/guides" class="text-primary dark:text-dark-primary block px-3 py-2 rounded-md text-base font-medium">Guides</a>
       <a href="/blog" class="text-primary dark:text-dark-primary block px-3 py-2 rounded-md text-base font-medium">Blog</a>
       <a href="/about" class="text-primary dark:text-dark-primary block px-3 py-2 rounded-md text-base font-medium">About Us</a>
-      <a href="/login" class="bg-accent hover:bg-accent/90 text-white block px-3 py-2 rounded-md text-base font-medium">Login</a>
+      {user ? (
+        <a href="/account" class="bg-accent hover:bg-accent/90 text-white block px-3 py-2 rounded-md text-base font-medium">My Account</a>
+      ) : (
+        <a href="/login" class="bg-accent hover:bg-accent/90 text-white block px-3 py-2 rounded-md text-base font-medium">Login</a>
+      )}
     </div>
   </div>
 </nav>
