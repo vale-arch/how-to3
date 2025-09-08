@@ -2,13 +2,24 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import GuideCard from '../components/GuideCard.astro';
+import { supabase } from '../lib/supabase';
+
+const { data: guides, error } = await supabase.from('guides').select('*');
+
+if (error) {
+  console.error('Error fetching guides:', error);
+  // Optionally, render an error message
+}
 ---
 
 <Layout>
   <Navbar />
 
   <main class="container mx-auto px-4 py-12 font-lato">
-    <h1 class="text-4xl font-bold font-poppins mb-8">All How-To Guides</h1>
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-4xl font-bold font-poppins">All How-To Guides</h1>
+      <a href="/upload" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Upload Guide</a>
+    </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
       <!-- Filters Sidebar -->
@@ -37,36 +48,13 @@ import GuideCard from '../components/GuideCard.astro';
       <!-- Guides Grid -->
       <section class="lg:col-span-3">
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
-          <GuideCard
-            title="Guide 1"
-            price={1000}
-            imageUrl="https://placehold.co/600x400/36454F/F5F5F5?text=Guide+1"
-          />
-          <GuideCard
-            title="Guide 2"
-            price={2000}
-            imageUrl="https://placehold.co/600x400/36454F/F5F5F5?text=Guide+2"
-          />
-          <GuideCard
-            title="Guide 3"
-            price={3000}
-            imageUrl="https://placehold.co/600x400/36454F/F5F5F5?text=Guide+3"
-          />
-          <GuideCard
-            title="Guide 4"
-            price={4000}
-            imageUrl="https://placehold.co/600x400/36454F/F5F5F5?text=Guide+4"
-          />
-          <GuideCard
-            title="Guide 5"
-            price={5000}
-            imageUrl="https://placehold.co/600x400/36454F/F5F5F5?text=Guide+5"
-          />
-          <GuideCard
-            title="Guide 6"
-            price={6000}
-            imageUrl="https://placehold.co/600x400/36454F/F5F5F5?text=Guide+6"
-          />
+          {guides && guides.map(guide => (
+            <GuideCard
+              title={guide.title}
+              price={guide.price}
+              imageUrl="https://placehold.co/600x400/36454F/F5F5F5?text=Guide"
+            />
+          ))}
         </div>
       </section>
     </div>
