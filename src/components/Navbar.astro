@@ -13,11 +13,9 @@ const { data: { user } } = await supabase.auth.getUser();
           <a href="/guides" class="text-primary dark:text-dark-primary hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Guides</a>
           <a href="/blog" class="text-primary dark:text-dark-primary hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Blog</a>
           <a href="/about" class="text-primary dark:text-dark-primary hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">About Us</a>
-          {user ? (
-            <a href="/account" class="bg-accent hover:bg-accent/90 text-white px-3 py-2 rounded-md text-sm font-medium">My Account</a>
-          ) : (
-            <a href="/login" class="bg-accent hover:bg-accent/90 text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
-          )}
+          <a id="auth-link-desktop" href={user ? "/account" : "/login"} class="bg-accent hover:bg-accent/90 text-white px-3 py-2 rounded-md text-sm font-medium">
+            {user ? "My Account" : "Login"}
+          </a>
         </div>
       </div>
       <div class="-mr-2 flex md:hidden">
@@ -43,12 +41,9 @@ const { data: { user } } = await supabase.auth.getUser();
       <a href="/guides" class="text-primary dark:text-dark-primary block px-3 py-2 rounded-md text-base font-medium">Guides</a>
       <a href="/blog" class="text-primary dark:text-dark-primary block px-3 py-2 rounded-md text-base font-medium">Blog</a>
       <a href="/about" class="text-primary dark:text-dark-primary block px-3 py-2 rounded-md text-base font-medium">About Us</a>
-      {user ? (
-        <a href="/account" class="bg-accent hover:bg-accent/90 text-white block px-3 py-2 rounded-md text-base font-medium">My Account</a>
-      ) : (
-        <a href="/login" class="bg-accent hover:bg-accent/90 text-white block px-3 py-2 rounded-md text-base font-medium">Login</a>
-      )}
-    </div>
+      <a id="auth-link-mobile" href={user ? "/account" : "/login"} class="bg-accent hover:bg-accent/90 text-white block px-3 py-2 rounded-md text-base font-medium">
+        {user ? "My Account" : "Login"}
+      </a>
   </div>
 </nav>
 
@@ -106,4 +101,35 @@ const { data: { user } } = await supabase.auth.getUser();
       }
       
   });
+  
 </script>
+
+<script is:inline>
+  import { supabase } from '../lib/supabase';
+
+  const authLinkDesktop = document.getElementById('auth-link-desktop');
+  const authLinkMobile = document.getElementById('auth-link-mobile');
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+      if (authLinkDesktop) {
+        authLinkDesktop.href = '/account';
+        authLinkDesktop.textContent = 'My Account';
+      }
+      if (authLinkMobile) {
+        authLinkMobile.href = '/account';
+        authLinkMobile.textContent = 'My Account';
+      }
+    } else if (event === 'SIGNED_OUT') {
+      if (authLinkDesktop) {
+        authLinkDesktop.href = '/login';
+        authLinkDesktop.textContent = 'Login';
+      }
+      if (authLinkMobile) {
+        authLinkMobile.href = '/login';
+        authLinkMobile.textContent = 'Login';
+      }
+    }
+  });
+</script>
+

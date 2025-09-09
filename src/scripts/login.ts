@@ -33,7 +33,7 @@ const handleAuth = async (authFunction: 'signInWithPassword' | 'signUp') => {
       showMessage('Sign up successful! Please check your email for a confirmation link.');
     } else {
       showMessage('Login successful!');
-      window.location.href = '/';
+      window.location.href = '/account';
     }
   }
 };
